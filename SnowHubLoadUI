@@ -1,1 +1,16 @@
+--[[ Src List By Hoho Hub ]]
 
+local list = {
+	[994732206] = "loadstring(game:HttpGet('https://github.com/ZPSXHUB/Hub/raw/main/SnowHubLoadUI'))()",
+}
+
+if list[game.GameId] ~= nil then
+	loadstring(list[tonumber(game.GameId)])()
+else	
+	game.Players.LocalPlayer:Kick("Game Hub Not Support")
+end
+
+local path = "loadstring(game:HttpGet('https://raw.githubusercontent.com/ZPSXHUB/Hub/main/SnowHubLoadUI'))()"
+
+local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport
+queueteleport(path)
