@@ -1,0 +1,106 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Window = Fluent:CreateWindow({
+    Title = "Blox Fruits Script",
+    SubTitle = "",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.RightControl
+})
+local Tabs = {
+    Main = Window:AddTab({ Title = "Tool Free Fire", Icon = "" }),
+}
+Tabs.Main:AddButton({
+    Title = "Soul Guita",
+    Description = "",
+    Callback = function()
+        local tool = Instance.new("Tool")
+tool.Name = "SoulGuitarEffectTool"
+tool.RequiresHandle = false
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+tool.Activated:Connect(function()
+    for i = 1, 50 do
+        spawn(function()
+            require(game:GetService("ReplicatedStorage").Effect.Container.SoulGuitar.Z)(
+                {
+                    player = game.Players.LocalPlayer,
+                    goalPos = game.Players.LocalPlayer:GetMouse().Hit.Position + Vector3.new(math.random(0, 100), math.random(0, 100), math.random(0, 100)),
+                    origin = game.Players.LocalPlayer.Character.PrimaryPart.Position,
+                    beamDissipateAfter = 99,
+                    beamDiameter = 999,
+                    beamExtendsForTime = 9,
+                }
+            )
+        end)
+    end
+end)
+
+    end
+})
+
+Tabs.Main:AddButton({
+    Title = "Holy Light Stick J97",
+    Description = "",
+    Callback = function()
+        local ppsabx = require(game:GetService("ReplicatedStorage").Effect.Container.PurpleSaber.X)
+setthreadcontext(5)
+local region = 500
+for i = 1,999,1 do
+    local cf = CFrame.new(math.random(-region, region), -5, math.random(-region, region))
+    if math.random(1, 2) == 1 then
+        cf = cf * CFrame.Angles(math.rad(90), 0, 0)
+    else
+        cf = cf * CFrame.new(0, 190, 0) * CFrame.Angles(math.rad(-90), 0, 0)
+    end
+    spawn(function()
+        ppsabx({
+            Stage = 999,
+            Distance = 1000,
+            CFrame = game.Players.LocalPlayer.Character.PrimaryPart.CFrame * cf,
+            Root = game.Players.LocalPlayer.Character.PrimaryPart,
+        })
+    end)
+end
+
+    end
+})
+Tabs.Main:AddButton({
+    Title = "Ban Tay Free Fire",
+    Description = "",
+    Callback = function()
+        local fmk = require(game:GetService("ReplicatedStorage").Effect.Container.FishmanKarate.X)
+        fmk({
+            SubEffect = 1,
+            Character = game.Players.LocalPlayer.Character,
+            Boolean = true,
+            MousePos = game.Players.LocalPlayer:GetMouse().Hit.p,
+            Char = game.Players.LocalPlayer.Character,
+            CFrame = game.Players.LocalPlayer:GetMouse().Hit
+        })
+    end
+})
+
+Tabs.Main:AddButton({
+    Title = "Ban Tay Free Fire",
+    Description = "",
+    Callback = function()
+local wing = require(game:GetService("ReplicatedStorage").Util.Wings)
+setthreadcontext(5)
+wing.Attach({
+    Color = Color3.fromRGB(0, 255, 255),
+    Root = game.Players.LocalPlayer.Character.PrimaryPart,
+    Size = 1,
+    Transparency = 0,
+    R15 = false
+})
+wing.Activate({
+    Color = Color3.fromRGB(0, 255, 255),
+    Root = game.Players.LocalPlayer.Character.PrimaryPart,
+    Size = 10,
+    Transparency = 0,
+    R15 = false
+})
+end
+})
