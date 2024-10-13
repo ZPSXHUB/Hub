@@ -28,9 +28,9 @@ tool.Activated:Connect(function()
                     player = game.Players.LocalPlayer,
                     goalPos = game.Players.LocalPlayer:GetMouse().Hit.Position + Vector3.new(math.random(0, 100), math.random(0, 100), math.random(0, 100)),
                     origin = game.Players.LocalPlayer.Character.PrimaryPart.Position,
-                    beamDissipateAfter = 99,
-                    beamDiameter = 999,
-                    beamExtendsForTime = 9,
+                    beamDissipateAfter =10,
+                    beamDiameter = 10,
+                    beamExtendsForTime = 2,
                 }
             )
         end)
