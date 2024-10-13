@@ -50,7 +50,7 @@ local Tabs = {
 spawn(function()
     while task.wait() do
         pcall(function()
-            if TweenMystic or TweenGear or TweenMystic1 then
+            if TweenMystic or TweenGear or TweenMystic1 or AutoGatCan or LevelFarm or Farm then
                 if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                     local Noclip = Instance.new("BodyVelocity")
                     Noclip.Name = "BodyClip"
@@ -68,7 +68,7 @@ end)
 spawn(function()
     pcall(function()
         game:GetService("RunService").Stepped:Connect(function()
-            if TweenMystic or TweenGear or TweenMystic1 then
+            if TweenMystic or TweenGear or TweenMystic1 or AutoGatCan or LevelFarm or Farm then
                 for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
                     if v:IsA("BasePart") then
                         v.CanCollide = false
@@ -300,5 +300,158 @@ spawn(function()
                 end
             end
        end
+    end
+end)
+
+local Tabs = {
+    Main = Window:AddTab({ Title = "Farm", Icon = "" }),
+}
+local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    Title = "Select Weapon",
+    Values = {"Melee", "Sword"},
+    Multi = false,
+    Default = 1,
+})
+
+Dropdown:OnChanged(function(Value)
+    gafga = Value
+end)
+local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Mob Aura", Default = false })
+function StopTween()
+    Tween2(game.Players.LocalPlayer.Character.Head.CFrame)
+end
+Toggle:OnChanged(function(Value)
+    LevelFarm = Value
+    Farm = Value
+    StopTween()
+end)
+function Click()
+    local bc = game:GetService("VirtualUser")
+    bc:CaptureController()
+    bc:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
+end
+function EnableBuso()
+    if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+        NoClip = true
+        local args = {[1] = "Buso"}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        NoClip = false
+    end
+    NoClip = false
+end
+function GetWeapon(bh)
+    s = ""
+    for r, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    for r, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        if v:IsA("Tool") and v.ToolTip == bh then
+            s = v.Name
+        end
+    end
+    return s
+end
+function EquipWeapon(ToolSe)
+    if gafga == "" or gafga == nil then
+        gafga = "Melee"
+    end
+    ToolSe = GetWeapon(gafga)
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+        NoClip = true
+        local bi = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+        wait(.4)
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(bi)
+        NoClip = false
+    end
+end
+spawn(function()
+ while wait() do
+   if LevelFarm then
+      for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+         if v:FindFirstChild('Humanoid') and v.Humanoid.Health ~= 0 and v:FindFirstChild('HumanoidRootPart') and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude < 1500 then
+            repeat wait()
+        if LevelFarm then
+            Tween2(v.HumanoidRootPart.CFrame * CFrame.new(10,10,10))
+            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+            PosLevelFarm = v.HumanoidRootPart.CFrame
+            for i1,v1 in pairs(game.Workspace.Enemies:GetChildren()) do
+                if v1:FindFirstChild('Humanoid') and v1:FindFirstChild('HumanoidRootPart') and (v1.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude < 170 then
+                    v1.HumanoidRootPart.Size = Vector3.new(50,50,50)
+                    v1.HumanoidRootPart.CanCollide = false
+                    v1.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                end
+            end    
+            EquipWeapon()
+            EnableBuso()
+            Click()
+        end
+            until not LevelFarm or not v:FindFirstChild('Humanoid') or not v:FindFirstChild('HumanoidRootPart') or v.Humanoid.Health == 0
+         end
+      end 
+   end
+ end
+end)
+--[[
+spawn(function()
+ while wait(3) do
+    if LevelFarm then
+        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if v:FindFirstChild('Humanoid') and v:FindFirstChild('HumanoidRootPart') and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 300 then
+               if PosLevelFarm then
+                v.HumanoidRootPart.CFrame = PosLevelFarm
+                v.HumanoidRootPart.Size = Vector3.new(50,50,50)
+               else
+                PosLevelFarm = v.HumanoidRootPart.CFrame
+               end
+            end
+        end
+    end
+ end
+end)
+]]
+local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Farm Bone", Default = false })
+
+Toggle:OnChanged(function(Value)
+    BoneFarm = Value
+    Farm = Value
+    StopTween()
+end)
+spawn(function()
+    while wait() do
+        if BoneFarm then
+            if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie") or game:GetService("Workspace").Enemies:FindFirstChild("Demonic Soul") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy") then
+                for i, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if v:FindFirstChild('Humanoid') and v.Humanoid.Health ~= 0 and v:FindFirstChild('HumanoidRootPart') and 
+                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude < 1500 then
+                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Sou" or v.Name == "Posessed Mummy" then
+                            repeat wait()
+                                if BoneFarm then
+                                    Tween2(v.HumanoidRootPart.CFrame * CFrame.new(10, 10, 10))
+                                    v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                    PosLevelFarm = v.HumanoidRootPart.CFrame
+                                    
+                                    for i1, v1 in pairs(game.Workspace.Enemies:GetChildren()) do
+                                        if v1:FindFirstChild('Humanoid') and v1:FindFirstChild('HumanoidRootPart') and 
+                                        (v1.HumanoidRootPart.Position - v.HumanoidRootPart.Position).magnitude < 170 then
+                                            v1.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                            v1.HumanoidRootPart.CanCollide = false
+                                            v1.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                                        end
+                                    end    
+                                    
+                                    EquipWeapon()
+                                    EnableBuso()
+                                    Click()
+                                end
+                            until not BoneFarm or not v:FindFirstChild('Humanoid') or not v:FindFirstChild('HumanoidRootPart') or v.Humanoid.Health == 0
+                        end
+                    end
+                end
+            else
+                Tween2(CFrame.new(-9359.453125, 141.32679748535156, 5446.81982421875))
+            end
+        end
     end
 end)
